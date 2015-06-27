@@ -1,0 +1,11 @@
+[Unit]
+Description=tunslip6
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/tunslip6 -B 38400 -L -s ttyUSB0 aaaa::/64
+KillMode=process
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
