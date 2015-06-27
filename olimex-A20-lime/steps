@@ -1,0 +1,52 @@
+#as root
+
+#add embedian cross toolchain repo
+curl http://emdebian.org/tools/debian/emdebian-toolchain-archive.key | apt-key add -
+
+#add following line to sources
+echo "deb http://emdebian.org/tools/debian/ jessie main" > /etc/apt/sources.list.d/emdebian.list
+dpkg --add-architecture armhf
+apt update
+apt install binfmt-support debootstrap qemu-user-static gcc-4.9-arm-linux-gnueabihf u-boot-tools
+
+#get base 
+debootstrap --arch=armhf --foreign jessie armjessiechroot
+
+#copy qemu for binfmt inside chroot
+cp /usr/bin/qemu-arm-static armjessiechroot/usr/bin
+
+#run second stage of debootstrap
+DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true  LC_ALL=C LANGUAGE=C LANG=C chroot armjessiechroot /debootstrap/debootstrap --second-stage
+DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true  LC_ALL=C LANGUAGE=C LANG=C chroot armjessiechroot dpkg --configure -a
+
+dd if=/dev/zero of=rootfs.img bs=1 count=0 seek=300M
+mkfs.ext4 -F rootfs.img
+mount -o loop rootfs.img /mnt
+cp -a armjessiechroot/. /mnt/
+umount /mnt
+
+#build kernel NOT AS ROOT
+curl -LJO https://www.kernel.org/pub/linux/kernel/v4.x/linux-4.1.tar.xz
+tar -xf linux-4.1.tar.xz
+cd linux-4.1
+sed -i s/\$\(CROSS_COMPILE\)gcc/\$\(CROSS_COMPILE\)gcc-4.9/ Makefile
+
+#config ...
+make ARCH=arm zImage dtbs
+
+#build uboot NOT AS ROOT
+curl -LJO ftp://ftp.denx.de/pub/u-boot/u-boot-2015.04.tar.bz2
+tar -xf u-boot-2015.04.tar.bz2
+cd u-boot-2015.04
+sed -i s/\$\(CROSS_COMPILE\)gcc/\$\(CROSS_COMPILE\)gcc-4.9/ scripts/Makefile.autoconf
+make CROSS_COMPILE=arm-linux-gnueabihf- A20-OLinuXino-Lime_defconfig
+make CROSS_COMPILE=arm-linux-gnueabihf-
+
+
+#flash the shit
+dd if=u-boot-2015.04/u-boot-sunxi-with-spl.bin of=/dev/mmcblk0 bs=1024 seek=8
+#mount the shit to mnt
+cp linux-4.1/arch/arm/boot/zImage /mnt
+akimage -C none -A arm -T script -d boot.cmd /mnt/boot.scr
+cp -ra armjessiechroot/* /mnt
+
