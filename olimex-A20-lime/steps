@@ -7,7 +7,7 @@ curl http://emdebian.org/tools/debian/emdebian-toolchain-archive.key | apt-key a
 echo "deb http://emdebian.org/tools/debian/ jessie main" > /etc/apt/sources.list.d/emdebian.list
 dpkg --add-architecture armhf
 apt update
-apt install binfmt-support debootstrap qemu-user-static gcc-4.9-arm-linux-gnueabihf u-boot-tools
+apt install binfmt-support debootstrap qemu-user-static gcc-4.9-arm-linux-gnueabihf u-boot-tools kpartx
 
 #get base 
 debootstrap --arch=armhf --foreign jessie armjessiechroot
@@ -19,11 +19,14 @@ cp /usr/bin/qemu-arm-static armjessiechroot/usr/bin
 DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true  LC_ALL=C LANGUAGE=C LANG=C chroot armjessiechroot /debootstrap/debootstrap --second-stage
 DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true  LC_ALL=C LANGUAGE=C LANG=C chroot armjessiechroot dpkg --configure -a
 
-dd if=/dev/zero of=rootfs.img bs=1 count=0 seek=300M
-mkfs.ext4 -F rootfs.img
-mount -o loop rootfs.img /mnt
-cp -a armjessiechroot/. /mnt/
-umount /mnt
+echo sarahbox > armjessiechroot/etc/hostname
+chroot armjessiechroot passwd << EOF
+root
+root
+EOF
+
+chroot armjessiechroot apt update
+chroot armjessiechroot apt install openssh-server
 
 #build kernel NOT AS ROOT
 curl -LJO https://www.kernel.org/pub/linux/kernel/v4.x/linux-4.1.tar.xz
@@ -38,15 +41,37 @@ make ARCH=arm zImage dtbs
 curl -LJO ftp://ftp.denx.de/pub/u-boot/u-boot-2015.04.tar.bz2
 tar -xf u-boot-2015.04.tar.bz2
 cd u-boot-2015.04
+sed -i s/\$\(CROSS_COMPILE\)gcc/\$\(CROSS_COMPILE\)gcc-4.9/ Makefile
 sed -i s/\$\(CROSS_COMPILE\)gcc/\$\(CROSS_COMPILE\)gcc-4.9/ scripts/Makefile.autoconf
 make CROSS_COMPILE=arm-linux-gnueabihf- A20-OLinuXino-Lime_defconfig
 make CROSS_COMPILE=arm-linux-gnueabihf-
 
 
-#flash the shit
-dd if=u-boot-2015.04/u-boot-sunxi-with-spl.bin of=/dev/mmcblk0 bs=1024 seek=8
-#mount the shit to mnt
-cp linux-4.1/arch/arm/boot/zImage /mnt
-akimage -C none -A arm -T script -d boot.cmd /mnt/boot.scr
-cp -ra armjessiechroot/* /mnt
+#create flashable roots as root
+fallocate -l 1G rootfs.raw
+/sbin/sfdisk --in-order --Linux --unit M rootfs.raw << EOF
+1,32,0xB,*
+,,,-
+EOF
 
+kpartx -avs rootfs.raw
+mkfs.vfat -F 16 /dev/mapper/loop0p1 -n boot
+mkfs.ext4 /dev/mapper/loop0p2 -L rootfs
+
+mkdir -p /mnt/boot
+mkdir -p /mnt/rootfs
+
+mount /dev/mapper/loop0p1 /mnt/boot/
+mount /dev/mapper/loop0p2 /mnt/rootfs/
+
+cp linux-4.1/arch/arm/boot/zImage /mnt/boot
+cp linux-4.1/arch/arm/boot/dts/sun7i-a20-olinuxino-lime.dtb /mnt/boot
+mkimage -C none -A arm -T script -d boot.cmd /mnt/boot/boot.scr
+cp -ra armjessiechroot/* /mnt/rootfs
+cp eth0 /mnt/rootfs/etc/network/interfaces.d/
+
+umount /mnt/boot/
+umount /mnt/rootfs/
+kpartx -dv rootfs.raw
+
+dd if=u-boot-2015.04/u-boot-sunxi-with-spl.bin of=rootfs.raw bs=1024 seek=8 conv=notrunc
