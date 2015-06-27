@@ -29,5 +29,5 @@ EOF
 wget -c https://github.com/contiki-os/contiki/raw/2.7/tools/tunslip6.c
 arm-linux-gnueabihf-gcc-4.9 tunslip6.c -o tunslip6
 mv tunslip6 armjessiechroot/usr/local/bin
-cp tunslip6.service /lib/systemd/system/
+cp /vagrant/tunslip6.service /lib/systemd/system/
 chroot armjessiechroot systemctl enable tunslip6.service
