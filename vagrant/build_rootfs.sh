@@ -14,7 +14,8 @@ root
 root
 EOF
 
-echo "/dev/mmcblk0p2 / ext4 errors=remount-ro 0 1" > armjessiechroot/etc/fstab
+echo "/dev/mmcblk0p2 / ext4 errors=remount-ro 0 1
+/dev/mmcblk0p1 /boot vfat defaults 0 0" > armjessiechroot/etc/fstab
 
 chroot armjessiechroot apt-get update
 chroot armjessiechroot apt-get install -y openssh-server vim usbutils
@@ -33,6 +34,7 @@ arm-linux-gnueabihf-gcc-4.9 tunslip6.c -o tunslip6
 mv tunslip6 armjessiechroot/usr/local/bin
 cp /vagrant/tunslip6.service armjessiechroot/lib/systemd/system/
 chroot armjessiechroot systemctl enable tunslip6.service
+cp /vagrant/eth0 armjessiechroot/etc/network/interfaces.d/
 
 #clean up rootfs a bit
 rm armjessiechroot/var/cache/apt/archives/*.deb

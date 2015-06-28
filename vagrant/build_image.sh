@@ -21,7 +21,6 @@ cp linux-4.1/arch/arm/boot/zImage /mnt/boot
 cp linux-4.1/arch/arm/boot/dts/`cat /vagrant/$1/dts.conf` /mnt/boot
 mkimage -C none -A arm -T script -d /vagrant/$1/boot.cmd /mnt/boot/boot.scr
 cp -ra armjessiechroot/* /mnt/rootfs
-cp /vagrant/eth0 /mnt/rootfs/etc/network/interfaces.d/
 
 umount /mnt/boot/
 umount /mnt/rootfs/
