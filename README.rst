@@ -9,6 +9,7 @@ kernel
 Requirements
 ------------
 
+- amd64 OS (Debian, ArchLinux tested)
 - vagrant
 - Virtualbox (vmware untested)
 - at least 5GB free space
