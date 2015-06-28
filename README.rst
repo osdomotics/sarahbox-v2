@@ -19,9 +19,11 @@ Quickstart
 
 - Clone repository
 - ``vagrant up``
-- ``vagrant ssh -c build``
+- ``vagrant ssh -c "build <board-dirname>"`` e.g. ``olimex-A20-lime``
 
-This will create the file ``rootfs.raw`` inside the project directory. Use ``build_rootfs``, ``build_kernel``, ``build_uboot`` and/or ``build_image`` to run the steps separately.
+This will create the file ``rootfs.raw`` inside the project directory.
+Use ``build_rootfs``, ``build_kernel``, ``build_uboot`` and/or ``build_image`` to run the steps separately.
+Don't forget to provide the board name.
 
 The system will try to fetch an IP using dhcp.
 
@@ -35,13 +37,18 @@ Restrictions
 -  kernel config only supports minimal features needed for border
    routers, adapt kernel-config-x.x if necessary
 
+Tweaks
+------
+
+- add ``export DEBMIRROR="<fast-mirror>"`` to ~vagrant/.bashrc inside the vm
+
 Supported Hardware
 ------------------
 
+-  Olimex A10-Lime
 -  Olimex A20-Lime
 
 Planned
 ~~~~~~~
 
--  Olimex A10-Lime
 -  Olimex A20-Lime2
