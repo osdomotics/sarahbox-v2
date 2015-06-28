@@ -33,3 +33,7 @@ arm-linux-gnueabihf-gcc-4.9 tunslip6.c -o tunslip6
 mv tunslip6 armjessiechroot/usr/local/bin
 cp /vagrant/tunslip6.service armjessiechroot/lib/systemd/system/
 chroot armjessiechroot systemctl enable tunslip6.service
+
+#clean up rootfs a bit
+rm armjessiechroot/var/cache/apt/archives/*.deb
+rm armjessiechroot/var/cache/apt/archives/partial/*
