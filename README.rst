@@ -47,8 +47,9 @@ Supported Hardware
 
 -  Olimex A10-Lime
 -  Olimex A20-Lime
+-  Olimex A20-Lime2 (untested)
 
 Planned
 ~~~~~~~
 
--  Olimex A20-Lime2
+- create an issue or pull-request for more hardware support
