@@ -21,9 +21,11 @@ Quickstart
 - ``vagrant up``
 - ``vagrant ssh -c "build <board-dirname>"`` e.g. ``olimex-A20-lime``
 
-This will create the file ``rootfs.raw`` inside the board directory.
-Use ``build_rootfs``, ``build_kernel``, ``build_uboot`` and/or ``build_image`` to run the steps separately.
+This will create the file ``sarahbox_<board-dirname>.img`` inside the project directory.
+Use ``build_rootfs`` as root, ``build_kernel``, ``build_uboot`` and/or ``build_image`` as root to run the steps separately.
 Don't forget to provide the board name.
+
+The generated 1GB image can be written on a sdcard using dd.
 
 The system will try to fetch an IP using dhcp.
 

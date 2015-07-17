@@ -1,13 +1,15 @@
 #!/bin/sh
 
+IMG_NAME=sarahbox_$1.img
+
 #create flashable roots as root
-dd if=/dev/zero of=rootfs.raw bs=1024 count=1048576
-/sbin/sfdisk --in-order --Linux --unit M rootfs.raw << EOF
+dd if=/dev/zero of=$IMG_NAME bs=1024 count=1048576
+/sbin/sfdisk --in-order --Linux --unit M $IMG_NAME << EOF
 1,32,0xB,*
 ,,,-
 EOF
 
-kpartx -avs rootfs.raw
+kpartx -avs $IMG_NAME
 mkfs.vfat -F 16 /dev/mapper/loop0p1 -n boot
 mkfs.ext4 /dev/mapper/loop0p2 -L rootfs
 
@@ -24,8 +26,8 @@ cp -ra armjessiechroot/* /mnt/rootfs
 
 umount /mnt/boot/
 umount /mnt/rootfs/
-kpartx -dv rootfs.raw
+kpartx -dv $IMG_NAME
 
 dd if=u-boot-2015.04/u-boot-sunxi-with-spl.bin of=rootfs.raw bs=1024 seek=8 conv=notrunc
 
-mv rootfs.raw /vagrant/$1/
+mv $IMG_NAME /vagrant/
