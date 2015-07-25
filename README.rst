@@ -47,9 +47,10 @@ Tweaks
 Supported Hardware
 ------------------
 
--  Olimex A10-Lime
--  Olimex A20-Lime
--  Olimex A20-Lime2 (untested)
+- Olimex A10-Lime
+- Olimex A20-Lime
+- Olimex A20-Lime2 (untested)
+- Lemaker Banana Pro (untested)
 
 Planned
 ~~~~~~~
