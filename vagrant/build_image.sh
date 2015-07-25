@@ -28,6 +28,6 @@ umount /mnt/boot/
 umount /mnt/rootfs/
 kpartx -dv $IMG_NAME
 
-dd if=u-boot-2015.04/u-boot-sunxi-with-spl.bin of=rootfs.raw bs=1024 seek=8 conv=notrunc
+dd if=u-boot-2015.04/u-boot-sunxi-with-spl.bin of=$IMG_NAME bs=1024 seek=8 conv=notrunc
 
 mv $IMG_NAME /vagrant/
