@@ -22,6 +22,8 @@ Quickstart
 - ``vagrant ssh -c "build <board-dirname>"`` e.g. ``olimex-A20-lime``
 
 This will create the file ``sarahbox_<board-dirname>.img`` inside the project directory.
+Use ``build_board_independent`` and ``build_board_dependent`` to build board
+(in)dependent parts.
 Use ``build_rootfs`` as root, ``build_kernel``, ``build_uboot`` and/or ``build_image`` as root to run the steps separately.
 Don't forget to provide the board name.
 
