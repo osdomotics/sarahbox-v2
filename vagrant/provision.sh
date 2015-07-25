@@ -9,7 +9,7 @@ apt-get update
 # base tools :)
 apt-get install -y vim
 # build tools
-apt-get install -y binfmt-support debootstrap qemu-user-static crossbuild-essential-armhf kpartx u-boot-tools dosfstools
+apt-get install -y binfmt-support debootstrap qemu-user-static crossbuild-essential-armhf kpartx u-boot-tools dosfstools device-tree-compiler
 
 sudo -u vagrant mkdir -p ~vagrant/bin
 sudo -u vagrant ln -fs /vagrant/vagrant/build.sh ~vagrant/bin/build
