@@ -39,7 +39,7 @@ Restrictions
 
 -  hardware may not be fully supported by mainline kernel (e.g. GPU)
 -  kernel config only supports minimal features needed for border
-   routers, adapt kernel-config-x.x if necessary
+   routers, adapt kernel-config-x.y.z if necessary
 
 Tweaks
 ------
