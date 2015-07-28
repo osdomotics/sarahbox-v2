@@ -10,7 +10,7 @@ Requirements
 ------------
 
 - amd64 OS (Debian, ArchLinux tested)
-- vagrant
+- vagrant (>1.7)
 - Virtualbox (vmware untested)
 - at least 5GB free space
 
