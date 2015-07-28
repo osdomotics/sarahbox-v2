@@ -1,6 +1,8 @@
 #!/bin/sh
 
 IMG_NAME=sarahbox_$1.img
+LINUXVER=4.1.3
+UBOOTVER=2015.07
 
 #create flashable roots as root
 dd if=/dev/zero of=$IMG_NAME bs=1024 count=1048576
@@ -19,8 +21,8 @@ mkdir -p /mnt/rootfs
 mount /dev/mapper/loop0p1 /mnt/boot/
 mount /dev/mapper/loop0p2 /mnt/rootfs/
 
-cp linux-4.1.1/arch/arm/boot/zImage /mnt/boot
-cp linux-4.1.1/arch/arm/boot/dts/`cat /vagrant/$1/dts.conf` /mnt/boot
+cp linux-$LINUXVER/arch/arm/boot/zImage /mnt/boot
+cp linux-$LINUXVER/arch/arm/boot/dts/`cat /vagrant/$1/dts.conf` /mnt/boot
 mkimage -C none -A arm -T script -d /vagrant/$1/boot.cmd /mnt/boot/boot.scr
 cp -ra armjessiechroot/* /mnt/rootfs
 
@@ -28,6 +30,6 @@ umount /mnt/boot/
 umount /mnt/rootfs/
 kpartx -dv $IMG_NAME
 
-dd if=u-boot-2015.07/u-boot-sunxi-with-spl.bin of=$IMG_NAME bs=1024 seek=8 conv=notrunc
+dd if=u-boot-$UBOOTVER/u-boot-sunxi-with-spl.bin of=$IMG_NAME bs=1024 seek=8 conv=notrunc
 
 mv $IMG_NAME /vagrant/
