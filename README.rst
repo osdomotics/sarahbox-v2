@@ -57,6 +57,5 @@ Supported Hardware
 Planned
 ~~~~~~~
 
-- Cubietech Cubieboard
 - Cubietech Cubieboard2
 - create an issue or pull-request for more hardware support
