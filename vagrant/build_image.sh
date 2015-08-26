@@ -1,7 +1,7 @@
 #!/bin/sh
 
 IMG_NAME=sarahbox_$1.img
-LINUXVER=4.1.3
+LINUXVER=4.1.6
 UBOOTVER=2015.07
 
 #create flashable roots as root

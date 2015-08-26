@@ -1,6 +1,6 @@
 #!/bin/sh
 
-LINUXVER=4.1.3
+LINUXVER=4.1.6
 
 wget -c https://www.kernel.org/pub/linux/kernel/v4.x/linux-$LINUXVER.tar.xz
 tar -xf linux-$LINUXVER.tar.xz
