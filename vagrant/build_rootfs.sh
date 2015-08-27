@@ -18,7 +18,7 @@ echo "/dev/mmcblk0p2 / ext4 errors=remount-ro 0 1
 /dev/mmcblk0p1 /boot vfat defaults 0 0" > armjessiechroot/etc/fstab
 
 chroot armjessiechroot apt-get update
-chroot armjessiechroot apt-get install -y openssh-server vim usbutils
+chroot armjessiechroot apt-get install -y openssh-server vim usbutils ntp
 chroot armjessiechroot adduser osd << EOF
 osd
 osd
