@@ -37,5 +37,5 @@ chroot armjessiechroot systemctl enable tunslip6.service
 cp /vagrant/eth0 armjessiechroot/etc/network/interfaces.d/
 
 #clean up rootfs a bit
-rm armjessiechroot/var/cache/apt/archives/*.deb
-rm armjessiechroot/var/cache/apt/archives/partial/*
+rm -f armjessiechroot/var/cache/apt/archives/*.deb
+rm -f armjessiechroot/var/cache/apt/archives/partial/*
