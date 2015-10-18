@@ -1,6 +1,6 @@
 #!/bin/sh
 
-UBOOTVER=2015.07
+source /vagrant/vagrant/settings.sh
 
 wget -c ftp://ftp.denx.de/pub/u-boot/u-boot-$UBOOTVER.tar.bz2
 tar -xf u-boot-$UBOOTVER.tar.bz2
