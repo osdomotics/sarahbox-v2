@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 
 #get base
 debootstrap --arch=armhf --foreign jessie armjessiechroot $DEBMIRROR

@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 
 . /vagrant/vagrant/settings.sh
 
