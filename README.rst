@@ -53,10 +53,10 @@ Supported Hardware
 - Olimex A20-Lime
 - Olimex A20-Lime2 (untested)
 - Olimex A20-Micro (untested)
+- Cubietech Cubieboard2 (untested)
 - Lemaker Banana Pro
 
 Planned
 ~~~~~~~
 
-- Cubietech Cubieboard2
 - create an issue or pull-request for more hardware support
