@@ -1,8 +1,8 @@
 #!/bin/sh
 
+. /vagrant/vagrant/settings.sh
+
 IMG_NAME=sarahbox_$1.img
-LINUXVER=4.2
-UBOOTVER=2015.07
 
 #create flashable roots as root
 dd if=/dev/zero of=$IMG_NAME bs=1024 count=1048576
