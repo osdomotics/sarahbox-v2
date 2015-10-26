@@ -1,6 +1,6 @@
 #!/bin/sh
 
-source /vagrant/vagrant/settings.sh
+. /vagrant/vagrant/settings.sh
 
 wget -c ftp://ftp.denx.de/pub/u-boot/u-boot-$UBOOTVER.tar.bz2
 tar -xf u-boot-$UBOOTVER.tar.bz2
