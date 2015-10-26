@@ -10,7 +10,7 @@ Requirements
 ------------
 
 - amd64 OS (Debian, ArchLinux tested)
-- vagrant
+- vagrant (>=1.6.5)
 - Virtualbox (vmware untested)
 - at least 5GB free space
 
@@ -22,6 +22,8 @@ Quickstart
 - ``vagrant ssh -c "build <board-dirname>"`` e.g. ``olimex-A20-lime``
 
 This will create the file ``sarahbox_<board-dirname>.img`` inside the project directory.
+Use ``build_board_independent`` and ``build_board_dependent`` to build board
+(in)dependent parts.
 Use ``build_rootfs`` as root, ``build_kernel``, ``build_uboot`` and/or ``build_image`` as root to run the steps separately.
 Don't forget to provide the board name.
 
@@ -37,7 +39,7 @@ Restrictions
 
 -  hardware may not be fully supported by mainline kernel (e.g. GPU)
 -  kernel config only supports minimal features needed for border
-   routers, adapt kernel-config-x.x if necessary
+   routers, adapt kernel-config-x.y.z if necessary
 
 Tweaks
 ------
@@ -51,10 +53,10 @@ Supported Hardware
 - Olimex A20-Lime
 - Olimex A20-Lime2 (untested)
 - Olimex A20-Micro (untested)
+- Lemaker Banana Pro
 
 Planned
 ~~~~~~~
 
-- Cubietech Cubieboard
 - Cubietech Cubieboard2
 - create an issue or pull-request for more hardware support
