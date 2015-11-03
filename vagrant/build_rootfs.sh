@@ -19,7 +19,12 @@ EOF
 echo "/dev/mmcblk0p2 / ext4 errors=remount-ro 0 1
 /dev/mmcblk0p1 /boot vfat defaults 0 0" > armjessiechroot/etc/fstab
 
+echo "deb http://httpredir.debian.org/debian jessie-backports main" > armjessiechroot/etc/apt/sources.list.d/backports.list
+echo "package: *
+Pin: release a=jessie-backports
+Pin-Priority: 200" > armjessiechroot/etc/apt/preferences.d/backportspin.conf
 chroot armjessiechroot apt-get update
+chroot armjessiechroot apt-get install -yt jessie-backports nftables
 chroot armjessiechroot apt-get install -y openssh-server vim usbutils ntp
 chroot armjessiechroot adduser osd << EOF
 osd
