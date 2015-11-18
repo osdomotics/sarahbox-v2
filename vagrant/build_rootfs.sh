@@ -2,7 +2,7 @@
 set -e
 
 #get base
-debootstrap --arch=armhf --foreign jessie armjessiechroot $DEBMIRROR
+debootstrap --arch=armhf --foreign jessie armjessiechroot http://httpredir.debian.org/debian
 #copy qemu for binfmt inside chroot
 cp /usr/bin/qemu-arm-static armjessiechroot/usr/bin
 #run second stage of debootstrap

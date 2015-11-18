@@ -41,11 +41,6 @@ Restrictions
 -  kernel config only supports minimal features needed for border
    routers, adapt kernel-config-x.y.z if necessary
 
-Tweaks
-------
-
-- add ``export DEBMIRROR="<fast-mirror>"`` to ~vagrant/.bashrc inside the vm
-
 Supported Hardware
 ------------------
 
