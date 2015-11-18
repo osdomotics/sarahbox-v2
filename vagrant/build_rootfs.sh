@@ -22,7 +22,7 @@ echo "/dev/mmcblk0p2 / ext4 errors=remount-ro 0 1
 echo "deb http://httpredir.debian.org/debian jessie-backports main" > armjessiechroot/etc/apt/sources.list.d/backports.list
 echo "package: *
 Pin: release a=jessie-backports
-Pin-Priority: 200" > armjessiechroot/etc/apt/preferences.d/backportspin.conf
+Pin-Priority: 200" > armjessiechroot/etc/apt/preferences.d/backportspin.pref
 chroot armjessiechroot apt-get update
 chroot armjessiechroot apt-get install -yt jessie-backports nftables
 chroot armjessiechroot apt-get install -y openssh-server vim usbutils ntp
