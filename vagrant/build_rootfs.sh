@@ -36,6 +36,8 @@ osd
 
 y
 EOF
+#enable ipv6 forwarding
+sed -i s/#net.ipv6.conf.all.forwarding=1/net.ipv6.conf.all.forwarding=1/ armjessiechroot/etc/sysctl.conf
 wget -c https://github.com/contiki-os/contiki/raw/2.7/tools/tunslip6.c
 arm-linux-gnueabihf-gcc-4.9 tunslip6.c -o tunslip6
 mv tunslip6 armjessiechroot/usr/local/bin
