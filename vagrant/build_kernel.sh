@@ -8,4 +8,4 @@ tar -xf linux-$LINUXVER.tar.xz
 cp /vagrant/kernel-config-$LINUXVER linux-$LINUXVER/.config
 cd linux-$LINUXVER
 
-make ARCH=arm zImage dtbs
+make ARCH=arm KBUILD_DEBARCH=armhf KDEB_PKGVERSION=$LINUXVER-$LINUXPKGVER deb-pkg

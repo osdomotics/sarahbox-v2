@@ -16,18 +16,18 @@ kpartx -avs $IMG_NAME
 mkfs.vfat -F 16 /dev/mapper/loop0p1 -n boot
 mkfs.ext4 /dev/mapper/loop0p2 -L rootfs
 
-mkdir -p /mnt/boot
+mkdir -p /mnt/uboot
 mkdir -p /mnt/rootfs
 
-mount /dev/mapper/loop0p1 /mnt/boot/
+mount /dev/mapper/loop0p1 /mnt/uboot/
 mount /dev/mapper/loop0p2 /mnt/rootfs/
 
-cp linux-$LINUXVER/arch/arm/boot/zImage /mnt/boot
-cp linux-$LINUXVER/arch/arm/boot/dts/`cat /vagrant/$1/dts.conf` /mnt/boot
-mkimage -C none -A arm -T script -d /vagrant/$1/boot.cmd /mnt/boot/boot.scr
 cp -ra armjessiechroot/* /mnt/rootfs
+rm -rf /mnt/rootfs/uboot/*
+cp -ra armjessiechroot/uboot/* /mnt/uboot
+mkimage -C none -A arm -T script -d /vagrant/$1/boot.cmd /mnt/uboot/boot.scr
 
-umount /mnt/boot/
+umount /mnt/uboot/
 umount /mnt/rootfs/
 kpartx -dv $IMG_NAME
 
