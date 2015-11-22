@@ -29,7 +29,7 @@ mkimage -C none -A arm -T script -d /vagrant/$1/boot.cmd /mnt/uboot/boot.scr
 
 umount /mnt/uboot/
 umount /mnt/rootfs/
-kpartx -dv $IMG_NAME
+kpartx -dvs $IMG_NAME
 
 dd if=u-boot-$UBOOTVER/u-boot-sunxi-with-spl.bin of=$IMG_NAME bs=1024 seek=8 conv=notrunc
 
