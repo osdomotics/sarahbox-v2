@@ -32,7 +32,7 @@ chroot armjessiechroot apt-key add osd.repository.key
 rm armjessiechroot/osd.repository.key
 chroot armjessiechroot apt-get update
 chroot armjessiechroot apt-get install -yt jessie-backports nftables
-chroot armjessiechroot apt-get install -y openssh-server vim usbutils ntp linux-image
+chroot armjessiechroot apt-get install -y openssh-server vim usbutils ntp linux-image python3-aiocoap-utils
 chroot armjessiechroot adduser osd << EOF
 osd
 osd
