@@ -11,7 +11,7 @@ Requirements
 
 - amd64 OS (Debian, ArchLinux tested)
 - vagrant (>=1.6.5)
-- Virtualbox (vmware untested)
+- Virtualbox
 - at least 5GB free space
 
 Quickstart
