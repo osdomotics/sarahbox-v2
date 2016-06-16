@@ -67,7 +67,7 @@ chmod 755 armjessiechroot/sbin/start-stop-daemon
 #install the packages
 chroot armjessiechroot apt-get update
 chroot armjessiechroot apt-get install -yt jessie-backports nftables
-chroot armjessiechroot apt-get install -y openssh-server vim usbutils ntp linux-image python3-aiocoap-utils
+chroot armjessiechroot apt-get install -y openssh-server vim usbutils ntp linux-image python3-aiocoap-utils ca-certificates
 chroot armjessiechroot apt-get upgrade -y
 
 #allow services again
