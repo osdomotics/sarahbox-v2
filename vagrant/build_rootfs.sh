@@ -67,7 +67,7 @@ chmod 755 armjessiechroot/sbin/start-stop-daemon
 #install the packages
 chroot armjessiechroot apt-get update
 chroot armjessiechroot apt-get install -yt jessie-backports nftables
-chroot armjessiechroot apt-get install -y openssh-server vim usbutils ntp linux-image python3-aiocoap-utils ca-certificates
+chroot armjessiechroot apt-get install -y openssh-server vim usbutils ntp linux-image python3-aiocoap-utils ca-certificates tunslip6
 chroot armjessiechroot apt-get upgrade -y
 
 #allow services again
@@ -93,14 +93,6 @@ y
 EOF
 fi
 
-#tunslip for our 6lowpan mesh
-wget -c https://github.com/contiki-os/contiki/raw/2.7/tools/tunslip6.c
-arm-linux-gnueabihf-gcc-4.9 tunslip6.c -o tunslip6
-mv tunslip6 armjessiechroot/usr/local/bin
-cp /vagrant/tunslip6.service armjessiechroot/lib/systemd/system/
-chroot armjessiechroot systemctl enable tunslip6.service
-
 #clean up rootfs a bit
 rm -f armjessiechroot/var/cache/apt/archives/*.deb
 rm -f armjessiechroot/var/cache/apt/archives/partial/*
-rm -f armjessiechroot/usr/bin/qemu-arm-static

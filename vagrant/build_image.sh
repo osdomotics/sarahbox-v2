@@ -23,6 +23,20 @@ mount /dev/mapper/loop0p1 /mnt/uboot/
 mount /dev/mapper/loop0p2 /mnt/rootfs/
 
 cp -ra armjessiechroot/* /mnt/rootfs
+
+export LC_ALL=C
+export LANGUAGE=C
+export LANG=C
+# tunslip6
+if [ -e /vagrant/$1/tunslip6/*.conf ]; then
+  for tunslipconfig in /vagrant/$1/tunslip6/*.conf
+  do
+    cp $tunslipconfig /mnt/rootfs/etc/tunslip6/;
+    chroot /mnt/rootfs systemctl enable tunslip6@`basename $tunslipconfig .conf`.service;
+  done
+fi
+rm -f /mnt/rootfs/usr/bin/qemu-arm-static
+
 rm -rf /mnt/rootfs/uboot/*
 cp -ra armjessiechroot/uboot/* /mnt/uboot
 mkimage -C none -A arm -T script -d /vagrant/$1/boot.cmd /mnt/uboot/boot.scr
