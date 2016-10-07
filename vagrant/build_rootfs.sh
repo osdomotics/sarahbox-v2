@@ -37,6 +37,8 @@ sed -i s/#net.ipv6.conf.all.forwarding=1/net.ipv6.conf.all.forwarding=1/ armjess
 #limit installed packages by disabling recommends
 echo "APT::Install-Recommends \"0\";" > armjessiechroot/etc/apt/apt.conf.d/99disable-recommends
 
+#replace default debian us mirror with httpredir
+sed -i s/ftp\.us\.debian\.org/httpredir\.debian\.org/ armjessiechroot/etc/apt/sources.list
 #security updates
 echo "deb http://security.debian.org/ jessie/updates main" > armjessiechroot/etc/apt/sources.list.d/security.list
 #backports (for nftables) pinned to require explicit installation
