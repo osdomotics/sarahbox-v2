@@ -23,8 +23,7 @@ if [ ! -e armjessiechroot/var/log/bootstrap.log ]; then
 fi
 
 #fstab
-echo "/dev/mmcblk0p2 / ext4 errors=remount-ro 0 1
-/dev/mmcblk0p1 /uboot vfat defaults 0 0" > armjessiechroot/etc/fstab
+echo "/dev/mmcblk0p1 / ext4 errors=remount-ro 0 1" > armjessiechroot/etc/fstab
 
 #hostname
 echo sarahbox > armjessiechroot/etc/hostname
@@ -55,7 +54,7 @@ rm armjessiechroot/osd.repository.key
 #kernel handling (uboot needs fat, but dpkg doesn't like /boot as fat)
 mkdir -p armjessiechroot/uboot
 mkdir -p armjessiechroot/etc/kernel/postinst.d/
-cp /vagrant/boot-copy armjessiechroot/etc/kernel/postinst.d/
+cp /vagrant/boot-link armjessiechroot/etc/kernel/postinst.d/
 
 #prevent services from starting
 echo "#!/bin/sh

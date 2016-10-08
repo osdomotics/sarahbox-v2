@@ -1,4 +1,0 @@
-#!/bin/sh
-echo kernel copy script running for $1
-cp /boot/vmlinuz-$1 /uboot/zImage
-cp /usr/lib/linux-image-$1/*.dtb /uboot
