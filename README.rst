@@ -50,8 +50,10 @@ Supported Hardware
 - Olimex A20-Micro (untested)
 - Cubietech Cubieboard2 (untested)
 - Lemaker Banana Pro
+- Xunlong OrangePi One
 
 Planned
 ~~~~~~~
 
+- FriendlyARM NanoPi Neo
 - create an issue or pull-request for more hardware support
