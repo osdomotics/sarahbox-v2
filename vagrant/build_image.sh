@@ -41,4 +41,10 @@ kpartx -dvs $IMG_NAME
 
 dd if=u-boot-$UBOOTVER/u-boot-sunxi-with-spl.bin of=$IMG_NAME bs=1024 seek=8 conv=notrunc
 
+if [ "$2" = "--compress" ]; then
+    echo "Compress image"
+    xz --best $IMG_NAME
+    IMG_NAME = $IMG_NAME.xz
+fi
+
 mv $IMG_NAME /vagrant/
