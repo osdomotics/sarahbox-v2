@@ -7,5 +7,5 @@ boards=( "olimex-A10-lime" "olimex-A20-lime" "olimex-A20-lime2" "olimex-A20-micr
 
 for i in "${boards[@]}"
 do
-   /vagrant/vagrant/build_board_dependent.sh $i --compress
+   /vagrant/vagrant/build_board_dependent.sh $i
 done
