@@ -50,10 +50,10 @@ Supported Hardware
 - Olimex A20-Micro (untested)
 - Cubietech Cubieboard2 (untested)
 - Lemaker Banana Pro
-- Xunlong OrangePi One
+- Xunlong OrangePi One (no eth driver in mainline yet)
+- FriendlyARM NanoPi Neo (no eth driver in mainline yet)
 
 Planned
 ~~~~~~~
 
-- FriendlyARM NanoPi Neo
 - create an issue or pull-request for more hardware support
