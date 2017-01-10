@@ -20,16 +20,10 @@ apt-get install -y binfmt-support debootstrap qemu-user-static crossbuild-essent
 
 #cleanup
 rm -f /var/cache/apt/*pkgcache.bin /var/cache/apt/archives/* /var/lib/apt/lists/*
-sed -i "s/GRUB_TIMEOUT=.*/GRUB_TIMEOUT=1/" /etc/default/grub
-update-grub2
 
-
-echo now boot the vm manually in recovery mode and run:
-echo systemctl stop networking
-echo mount -o remount,ro /
-echo zerofree /dev/sda1
-echo shutdown -h 0
-echo
-echo adjust box memory and other settings in virtualbox
+echo ------------------------------------------------------
+echo BOX PREPARED
+echo ------------------------------------------------------
+echo "now finalize the box (size optimize) with ./finalize.sh"
 echo and export the box with \'vagrant package\'
 shutdown -h 0
