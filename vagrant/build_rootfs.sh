@@ -68,7 +68,9 @@ chmod 755 armjessiechroot/sbin/start-stop-daemon
 #install the packages
 chroot armjessiechroot apt-get update
 chroot armjessiechroot apt-get install -yt jessie-backports nftables
-chroot armjessiechroot apt-get install -y openssh-server vim usbutils ntp linux-image python3-aiocoap-utils ca-certificates tunslip6
+KERNELPACKAGE=$(grep "Package: linux-image" armjessiechroot/var/lib/apt/lists/sarahbox.osdomotics.com_debian_dists_jessie_free_binary-armhf_Packages)
+KERNELPACKAGE=$(echo $KERNELPACKAGE | cut -d " " -f 2 | sort -r | head -n 1)
+chroot armjessiechroot apt-get install -y openssh-server vim usbutils ntp $KERNELPACKAGE python3-aiocoap-utils ca-certificates tunslip6
 chroot armjessiechroot apt-get upgrade -y
 
 #allow services again

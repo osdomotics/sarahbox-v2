@@ -7,8 +7,8 @@ IMG_NAME=sarahbox_$1.img
 
 #create flashable roots as root
 dd if=/dev/zero of=$IMG_NAME bs=1024 count=1048576
-/sbin/sfdisk --in-order --Linux --unit M $IMG_NAME << EOF
-1,,,*
+/sbin/sfdisk $IMG_NAME << EOF
+start=2048,bootable
 EOF
 
 kpartx -avs $IMG_NAME
