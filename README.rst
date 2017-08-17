@@ -56,4 +56,5 @@ Supported Hardware
 Planned
 ~~~~~~~
 
+- Xunlong OrangePi Zero
 - create an issue or pull-request for more hardware support
