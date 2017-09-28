@@ -52,9 +52,9 @@ Supported Hardware
 - Lemaker Banana Pro
 - Xunlong OrangePi One (untested)
 - FriendlyARM NanoPi Neo (eth driver untested)
+- Xunlong OrangePi Zero (untested)
 
 Planned
 ~~~~~~~
 
-- Xunlong OrangePi Zero
 - create an issue or pull-request for more hardware support
