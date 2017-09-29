@@ -51,8 +51,8 @@ Supported Hardware
 - Cubietech Cubieboard2 (untested)
 - Lemaker Banana Pro
 - Xunlong OrangePi One (untested)
-- FriendlyARM NanoPi Neo (eth driver untested)
-- Xunlong OrangePi Zero (untested)
+- FriendlyARM NanoPi Neo (no eth)
+- Xunlong OrangePi Zero (no eth)
 
 Planned
 ~~~~~~~
