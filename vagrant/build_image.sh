@@ -18,7 +18,7 @@ mkdir -p /mnt/rootfs
 
 mount /dev/mapper/loop0p1 /mnt/rootfs/
 
-cp -ra armjessiechroot/* /mnt/rootfs
+cp -ra armstretchchroot/* /mnt/rootfs
 
 export LC_ALL=C
 export LANGUAGE=C
@@ -31,6 +31,7 @@ if [ -e /vagrant/$1/tunslip6/*.conf ]; then
     chroot /mnt/rootfs systemctl enable tunslip6@`basename $tunslipconfig .conf`.service;
   done
 fi
+
 rm -f /mnt/rootfs/usr/bin/qemu-arm-static
 
 mkimage -C none -A arm -T script -d /vagrant/$1/boot.cmd /mnt/rootfs/boot/boot.scr

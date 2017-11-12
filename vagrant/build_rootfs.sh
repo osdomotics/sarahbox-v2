@@ -2,13 +2,13 @@
 set -e
 
 #debootstrap stage1
-if [ ! -e armjessiechroot/var/log/bootstrap.log ]; then
+if [ ! -e armstretchchroot/var/log/bootstrap.log ]; then
     #get base
-    debootstrap --arch=armhf --foreign jessie armjessiechroot http://httpredir.debian.org/debian
+    debootstrap --arch=armhf --foreign stretch armstretchchroot
 fi
 
 #qemu for chroot and some env settings to make apt run by itself
-cp /usr/bin/qemu-arm-static armjessiechroot/usr/bin
+cp /usr/bin/qemu-arm-static armstretchchroot/usr/bin
 export APT_LISTCHANGES_FRONTEND=none
 export DEBIAN_FRONTEND=noninteractive
 export DEBCONF_NONINTERACTIVE_SEEN=true
@@ -17,74 +17,69 @@ export LANGUAGE=C
 export LANG=C
 
 #debootstrap stage2
-if [ ! -e armjessiechroot/var/log/bootstrap.log ]; then
-    chroot armjessiechroot /debootstrap/debootstrap --second-stage
-    chroot armjessiechroot dpkg --configure -a
+if [ ! -e armstretchchroot/var/log/bootstrap.log ]; then
+    chroot armstretchchroot /debootstrap/debootstrap --second-stage
+    chroot armstretchchroot dpkg --configure -a
 fi
 
 #fstab
-echo "/dev/mmcblk0p1 / ext4 errors=remount-ro 0 1" > armjessiechroot/etc/fstab
+echo "/dev/mmcblk0p1 / ext4 errors=remount-ro 0 1" > armstretchchroot/etc/fstab
 
 #hostname
-echo sarahbox > armjessiechroot/etc/hostname
-sed -ie "s/127.0.0.1\\slocalhost/127.0.0.1\\tlocalhost sarahbox/" armjessiechroot/etc/hosts
+echo sarahbox > armstretchchroot/etc/hostname
+sed -ie "s/127.0.0.1\\slocalhost/127.0.0.1\\tlocalhost sarahbox/" armstretchchroot/etc/hosts
 
 #networking
-cp /vagrant/eth0 armjessiechroot/etc/network/interfaces.d/
-sed -i s/#net.ipv6.conf.all.forwarding=1/net.ipv6.conf.all.forwarding=1/ armjessiechroot/etc/sysctl.conf
+cp /vagrant/eth0 armstretchchroot/etc/network/interfaces.d/
+sed -i s/#net.ipv6.conf.all.forwarding=1/net.ipv6.conf.all.forwarding=1/ armstretchchroot/etc/sysctl.conf
 
 #limit installed packages by disabling recommends
-echo "APT::Install-Recommends \"0\";" > armjessiechroot/etc/apt/apt.conf.d/99disable-recommends
+echo "APT::Install-Recommends \"0\";" > armstretchchroot/etc/apt/apt.conf.d/99disable-recommends
 
-#replace default debian us mirror with httpredir
-sed -i s/ftp\.us\.debian\.org/httpredir\.debian\.org/ armjessiechroot/etc/apt/sources.list
+#base repo (debootstrap sets it to http://debootstrap.invalid/)
+echo "deb http://deb.debian.org/debian/ stretch main" > armstretchchroot/etc/apt/sources.list
+
 #security updates
-echo "deb http://security.debian.org/ jessie/updates main" > armjessiechroot/etc/apt/sources.list.d/security.list
-#backports (for nftables) pinned to require explicit installation
-echo "deb http://httpredir.debian.org/debian jessie-backports main" > armjessiechroot/etc/apt/sources.list.d/backports.list
-echo "package: *
-Pin: release a=jessie-backports
-Pin-Priority: 200" > armjessiechroot/etc/apt/preferences.d/backportspin.pref
-#the osd repo (kernel and coap things)
-echo "deb http://sarahbox.osdomotics.com/debian jessie free" > armjessiechroot/etc/apt/sources.list.d/osd.list
-cp /vagrant/osd.repository.key armjessiechroot
-chroot armjessiechroot apt-key add osd.repository.key
-rm armjessiechroot/osd.repository.key
+echo "deb http://security.debian.org/ stretch/updates main" > armstretchchroot/etc/apt/sources.list.d/security.list
 
-#kernel handling (uboot needs fat, but dpkg doesn't like /boot as fat)
-mkdir -p armjessiechroot/uboot
-mkdir -p armjessiechroot/etc/kernel/postinst.d/
-cp /vagrant/boot-link armjessiechroot/etc/kernel/postinst.d/
+#the osd repo (kernel and coap things)
+mkdir -p armstretchchroot/etc/apt/sources.list.d/
+echo "deb http://sarahbox.osdomotics.com/debian stretch free" > armstretchchroot/etc/apt/sources.list.d/osd.list
+cp /vagrant/osd.repository.key armstretchchroot
+chroot armstretchchroot apt-key add osd.repository.key
+rm armstretchchroot/osd.repository.key
+
+#kernel install should link zimage and dts according to the universal uboot script
+mkdir -p armstretchchroot/etc/kernel/postinst.d/
+cp /vagrant/boot-link armstretchchroot/etc/kernel/postinst.d/
 
 #prevent services from starting
 echo "#!/bin/sh
-exit 101" > armjessiechroot/usr/sbin/policy-rc.d
-chmod 755 armjessiechroot/usr/sbin/policy-rc.d
-mv armjessiechroot/sbin/start-stop-daemon armjessiechroot/sbin/start-stop-daemon.REAL
+exit 101" > armstretchchroot/usr/sbin/policy-rc.d
+chmod 755 armstretchchroot/usr/sbin/policy-rc.d
+mv armstretchchroot/sbin/start-stop-daemon armstretchchroot/sbin/start-stop-daemon.REAL
 echo "#!/bin/sh
-echo \"Warning: Fake start-stop-daemon called, doing nothing\"" > armjessiechroot/sbin/start-stop-daemon
-chmod 755 armjessiechroot/sbin/start-stop-daemon
+echo \"Warning: Fake start-stop-daemon called, doing nothing\"" > armstretchchroot/sbin/start-stop-daemon
+chmod 755 armstretchchroot/sbin/start-stop-daemon
 
 #install the packages
-chroot armjessiechroot apt-get update
-chroot armjessiechroot apt-get install -yt jessie-backports nftables
-KERNELPACKAGE=$(grep "Package: linux-image" armjessiechroot/var/lib/apt/lists/sarahbox.osdomotics.com_debian_dists_jessie_free_binary-armhf_Packages)
-KERNELPACKAGE=$(echo $KERNELPACKAGE | cut -d " " -f 2 | sort -r | head -n 1)
-chroot armjessiechroot apt-get install -y openssh-server vim usbutils ntp $KERNELPACKAGE python3-aiocoap-utils ca-certificates tunslip6
-chroot armjessiechroot apt-get upgrade -y
+chroot armstretchchroot apt-get update
+KERNELPACKAGE=$(grep "Package: linux-image" armstretchchroot/var/lib/apt/lists/sarahbox.osdomotics.com_debian_dists_stretch_free_binary-armhf_Packages | cut -d " " -f 2 | sort -r | head -n 1)
+chroot armstretchchroot apt-get install -y openssh-server vim usbutils ntp $KERNELPACKAGE python3-aiocoap-utils ca-certificates nftables tunslip6 net-tools
+chroot armstretchchroot apt-get upgrade -y
 
 #allow services again
-rm -f armjessiechroot/usr/sbin/policy-rc.d
-mv armjessiechroot/sbin/start-stop-daemon.REAL armjessiechroot/sbin/start-stop-daemon
+rm -f armstretchchroot/usr/sbin/policy-rc.d
+mv armstretchchroot/sbin/start-stop-daemon.REAL armstretchchroot/sbin/start-stop-daemon
 
 #setup the users
-chroot armjessiechroot passwd << EOF
+chroot armstretchchroot passwd << EOF
 root
 root
 EOF
 
-if ! grep -Fq osd armjessiechroot/etc/passwd; then
-chroot armjessiechroot adduser osd << EOF
+if ! grep -Fq osd armstretchchroot/etc/passwd; then
+chroot armstretchchroot adduser osd << EOF
 osd
 osd
 
@@ -97,5 +92,5 @@ EOF
 fi
 
 #clean up rootfs a bit
-rm -f armjessiechroot/var/cache/apt/archives/*.deb
-rm -f armjessiechroot/var/cache/apt/archives/partial/*
+rm -f armstretchchroot/var/cache/apt/archives/*.deb
+rm -f armstretchchroot/var/cache/apt/archives/partial/*
