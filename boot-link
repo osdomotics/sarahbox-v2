@@ -1,4 +1,6 @@
 #!/bin/sh
 echo kernel link script running for $1
 ln -sf /boot/vmlinuz-$1 /boot/zImage
-ln -sf /usr/lib/linux-image-$1 /boot/dtb
+# -f override for ln does not work for directory links
+rm -f /boot/dtb
+ln -s /usr/lib/linux-image-$1 /boot/dtb
