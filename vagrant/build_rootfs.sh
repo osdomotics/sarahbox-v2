@@ -91,6 +91,9 @@ y
 EOF
 fi
 
+#we have no locales, make apt and friends a bit more friendly
+echo "LC_ALL=C" >> /etc/profile
+
 #clean up rootfs a bit
 rm -f armstretchchroot/var/cache/apt/archives/*.deb
 rm -f armstretchchroot/var/cache/apt/archives/partial/*
