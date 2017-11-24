@@ -45,9 +45,7 @@ echo "deb http://security.debian.org/ stretch/updates main" > armstretchchroot/e
 #the osd repo (kernel and coap things)
 mkdir -p armstretchchroot/etc/apt/sources.list.d/
 echo "deb http://sarahbox.osdomotics.com/debian stretch free" > armstretchchroot/etc/apt/sources.list.d/osd.list
-cp /vagrant/osd.repository.key armstretchchroot
-chroot armstretchchroot apt-key add osd.repository.key
-rm armstretchchroot/osd.repository.key
+cp /vagrant/osd.repository.key armstretchchroot/etc/apt/trusted.gpg.d/osd.gpg
 
 #kernel install should link zimage and dts according to the universal uboot script
 mkdir -p armstretchchroot/etc/kernel/postinst.d/
