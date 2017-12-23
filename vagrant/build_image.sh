@@ -8,6 +8,7 @@ IMG_NAME=sarahbox_$1.img
 #create flashable roots as root
 dd if=/dev/zero of=$IMG_NAME bs=1024 count=1048576
 /sbin/sfdisk $IMG_NAME << EOF
+label=dos
 start=2048,bootable
 EOF
 
