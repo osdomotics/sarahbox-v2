@@ -63,10 +63,7 @@ chmod 755 armstretchchroot/sbin/start-stop-daemon
 #install the packages
 chroot armstretchchroot apt-get update
 KERNELPACKAGE=$(grep "Package: linux-image" armstretchchroot/var/lib/apt/lists/sarahbox.osdomotics.com_debian_dists_stretch_free_binary-armhf_Packages | cut -d " " -f 2 | sort -r | head -n 1)
-chroot armstretchchroot apt-get install -y openssh-server vim usbutils ntp $KERNELPACKAGE python3-aiocoap-utils ca-certificates nftables tunslip6 net-tools locales
-#build locales for fame and tmux
-echo "en_US.UTF-8 UTF-8" >> armstretchchroot/etc/locale.gen
-chroot armstretchchroot locale-gen
+chroot armstretchchroot apt-get install -y openssh-server vim usbutils ntp $KERNELPACKAGE python3-aiocoap-utils ca-certificates nftables tunslip6 net-tools
 chroot armstretchchroot apt-get upgrade -y
 
 #allow services again
@@ -91,6 +88,9 @@ osd
 y
 EOF
 fi
+
+#we have no locales, make apt and friends a bit more friendly and UTF-8 for tmux and friends
+echo "export LC_ALL=C.UTF-8" >> /etc/profile
 
 #clean up rootfs a bit
 rm -f armstretchchroot/var/cache/apt/archives/*.deb
