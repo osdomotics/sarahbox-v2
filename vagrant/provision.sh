@@ -2,6 +2,7 @@
 
 sudo -u vagrant mkdir -p ~vagrant/bin
 sudo -u vagrant ln -fs /vagrant/vagrant/build.sh ~vagrant/bin/build
+sudo -u vagrant ln -fs /vagrant/vagrant/build_all.sh ~vagrant/bin/build_all
 sudo -u vagrant ln -fs /vagrant/vagrant/build_kernel.sh ~vagrant/bin/build_kernel
 sudo -u vagrant ln -fs /vagrant/vagrant/build_rootfs.sh ~vagrant/bin/build_rootfs
 sudo -u vagrant ln -fs /vagrant/vagrant/build_uboot.sh ~vagrant/bin/build_uboot
