@@ -4,7 +4,7 @@ set -e
 #debootstrap stage1
 if [ ! -e armstretchchroot/var/log/bootstrap.log ]; then
     #get base
-    debootstrap --arch=armhf --foreign stretch armstretchchroot
+    debootstrap --include=apt-transport-https  --arch=armhf --foreign stretch armstretchchroot 
 fi
 
 #qemu for chroot and some env settings to make apt run by itself
@@ -39,12 +39,14 @@ echo "APT::Install-Recommends \"0\";" > armstretchchroot/etc/apt/apt.conf.d/99di
 #base repo (debootstrap sets it to http://debootstrap.invalid/)
 echo "deb http://deb.debian.org/debian/ stretch main" > armstretchchroot/etc/apt/sources.list
 
+#other repos
+mkdir -p armstretchchroot/etc/apt/sources.list.d/
+
 #security updates
 echo "deb http://security.debian.org/ stretch/updates main" > armstretchchroot/etc/apt/sources.list.d/security.list
 
 #the osd repo (kernel and coap things)
-mkdir -p armstretchchroot/etc/apt/sources.list.d/
-echo "deb http://sarahbox.osdomotics.com/debian stretch free" > armstretchchroot/etc/apt/sources.list.d/osd.list
+echo "deb https://sarahbox.osdomotics.com/debian stretch free" > armstretchchroot/etc/apt/sources.list.d/osd.list
 cp /vagrant/osd.repository.key armstretchchroot/etc/apt/trusted.gpg.d/osd.gpg
 
 #kernel install should link zimage and dts according to the universal uboot script
