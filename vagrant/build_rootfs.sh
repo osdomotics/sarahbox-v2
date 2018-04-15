@@ -4,7 +4,7 @@ set -e
 #debootstrap stage1
 if [ ! -e armstretchchroot/var/log/bootstrap.log ]; then
     #get base
-    debootstrap --include=apt-transport-https  --arch=armhf --foreign stretch armstretchchroot 
+    debootstrap --include=apt-transport-https,ca-certificates  --arch=armhf --foreign stretch armstretchchroot 
 fi
 
 #qemu for chroot and some env settings to make apt run by itself
@@ -65,7 +65,7 @@ chmod 755 armstretchchroot/sbin/start-stop-daemon
 #install the packages
 chroot armstretchchroot apt-get update
 KERNELPACKAGE=$(grep "Package: linux-image" armstretchchroot/var/lib/apt/lists/sarahbox.osdomotics.com_debian_dists_stretch_free_binary-armhf_Packages | cut -d " " -f 2 | sort -r | head -n 1)
-chroot armstretchchroot apt-get install -y openssh-server vim usbutils ntp $KERNELPACKAGE python3-aiocoap-utils ca-certificates nftables tunslip6 net-tools
+chroot armstretchchroot apt-get install -y openssh-server vim usbutils ntp $KERNELPACKAGE python3-aiocoap-utils nftables tunslip6 net-tools
 chroot armstretchchroot apt-get upgrade -y
 
 #allow services again
