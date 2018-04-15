@@ -92,7 +92,7 @@ EOF
 fi
 
 #we have no locales, make apt and friends a bit more friendly and UTF-8 for tmux and friends
-echo "export LC_ALL=C.UTF-8" >> /etc/profile
+echo "export LC_ALL=C.UTF-8" >> armstrechchroot/etc/profile
 
 #clean up rootfs a bit
 rm -f armstretchchroot/var/cache/apt/archives/*.deb
