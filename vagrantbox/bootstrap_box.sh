@@ -9,6 +9,12 @@ apt-get install -y vim curl binfmt-support debootstrap qemu-user-static crossbui
 #cleanup
 rm -f /var/cache/apt/*pkgcache.bin /var/cache/apt/archives/* /var/lib/apt/lists/*
 
+unset HISTFILE
+rm -f /root/.bash_history
+rm -f /home/vagrant/.bash_history
+
+find /var/log -type -f -delete
+
 echo ------------------------------------------------------
 echo BOX PREPARED
 echo ------------------------------------------------------
