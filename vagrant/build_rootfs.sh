@@ -4,7 +4,7 @@ set -e
 #debootstrap stage1
 if [ ! -e armstretchchroot/var/log/bootstrap.log ]; then
     #get base
-    debootstrap --include=apt-transport-https,ca-certificates  --arch=armhf --foreign stretch armstretchchroot 
+    debootstrap --include=apt-transport-https,ca-certificates,cloud-guest-utils  --arch=armhf --foreign stretch armstretchchroot 
 fi
 
 #qemu for chroot and some env settings to make apt run by itself
