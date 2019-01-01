@@ -13,7 +13,7 @@ unset HISTFILE
 rm -f /root/.bash_history
 rm -f /home/vagrant/.bash_history
 
-find /var/log -type -f -delete
+find /var/log -type f -delete
 
 echo ------------------------------------------------------
 echo BOX PREPARED
