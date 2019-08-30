@@ -12,8 +12,8 @@ Vagrant.configure(2) do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "osd/stretch64-cross"
-  config.vm.box_url = "http://sarahbox.osdomotics.com/vagrant/stretch64-osd.json"
+  config.vm.box = "osd/buster64-cross"
+  config.vm.box_url = "http://sarahbox.osdomotics.com/vagrant/buster64-osd.json"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs

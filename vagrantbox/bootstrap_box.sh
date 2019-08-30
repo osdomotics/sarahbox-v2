@@ -19,5 +19,6 @@ echo ------------------------------------------------------
 echo BOX PREPARED
 echo ------------------------------------------------------
 echo "now finalize the box (size optimize) with ./finalize.sh"
-echo and export the box with \'vagrant package\'
+echo "update the box memory to 2G in virtualbox"
+echo "and export the box with 'vagrant package'"
 shutdown -h 0
