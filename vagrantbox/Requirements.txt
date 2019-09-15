@@ -1,4 +1,4 @@
 the finalize.sh script uses qemu-nbd kpartx and zerofree to modify the vmdk image
 
 on debian those are in the following packages:
-qemu-utils kpartx zerofree
+qemu-utils zerofree
