@@ -14,8 +14,8 @@ Requirements
 - Virtualbox
 - at least 5GB free space
 
-Quickstart
-----------
+Quickstart (vagrant)
+--------------------
 
 - Clone repository
 - ``vagrant up``
@@ -33,6 +33,17 @@ The system will try to fetch an IP using dhcp.
 
 Access the system using a serial connection or ssh as user ``osd`` with password ``osd``,
 default ``root`` password is ``root``, **change both passwords asap**.
+
+Quickstart (docker)
+-------------------
+
+WARNING: it is necessary to run docker in priviledged mode, use on your own risk
+Howto for podman planned
+
+- Clone repository
+- ``docker run --privileged --rm -it -v $(pwd):/code``
+- ``cd /code``
+- ``./scripts/build.sh <board-dirname>``
 
 Restrictions
 ------------
