@@ -41,6 +41,10 @@ WARNING: it is necessary to run docker in priviledged mode, use on your own risk
 Howto for podman planned
 
 - Clone repository
+- Download https://raw.githubusercontent.com/qemu/qemu/master/scripts/qemu-binfmt-conf.sh
+- ``chmod +x qemu-binfmt-conf.sh``
+- ``./qemu-binfmt-conf.sh --systemd arm``
+- ``systemctl start systemd-binfmt``
 - ``docker run --privileged --rm -it -v $(pwd):/code``
 - ``cd /code``
 - ``./scripts/build.sh <board-dirname>``
