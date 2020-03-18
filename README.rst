@@ -58,3 +58,12 @@ Planned
 ~~~~~~~
 
 - create an issue or pull-request for more hardware support
+
+Additional kernel features
+--------------------------
+
+- FUSE
+- CD/DVD (ISO9660/UDF)
+- NFS
+- NTFS
+- SMB/CIFS
