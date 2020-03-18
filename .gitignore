@@ -1,0 +1,12 @@
+/*.tar.gz
+/*.xz
+/*.dsc
+/*.deb
+/*.diff.gz
+/*.log
+/*.changes
+/*.buildinfo
+/linux-*
+/.vagrant
+/armstretchchroot
+/debs
