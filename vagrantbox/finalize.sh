@@ -10,7 +10,7 @@ sudo modprobe nbd
 sudo qemu-nbd -c /dev/nbd0 "$DISK"
 
 echo optimizing image
-sudo zerofree -v /dev/mapper/nbd0p1
+sudo zerofree -v /dev/nbd0p1
 
 echo unmounting image
 sudo qemu-nbd -d /dev/nbd0
