@@ -1,0 +1,8 @@
+quilt push / pop on an empty series file fail
+this empty patch ensures that the build script works at all times
+Index: linux-5.18.16/.empty
+===================================================================
+--- /dev/null
++++ linux-5.18.16/.empty
+@@ -0,0 +1 @@
++empty

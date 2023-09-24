@@ -44,17 +44,10 @@ Restrictions
 Supported Hardware
 ------------------
 
-- Olimex A10-Lime
 - Olimex A20-Lime
-- Olimex A20-Lime2
-- Olimex A20-Micro (untested)
-- Cubietech Cubieboard2 (untested)
-- Lemaker Banana Pro
-- Xunlong OrangePi One (untested)
-- FriendlyARM NanoPi Neo (no eth)
-- Xunlong OrangePi Zero (no eth)
 
-Planned
-~~~~~~~
+Kernel
+------
 
-- create an issue or pull-request for more hardware support
+The Kernel is built based on the sunxi_defconfig
+With extra options enabled documented in KERNEL.rst

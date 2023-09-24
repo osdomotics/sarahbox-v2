@@ -12,33 +12,25 @@ label:dos
 start=2048,bootable
 EOF
 
-kpartx -avs $IMG_NAME
-mkfs.ext4 /dev/mapper/loop0p1 -L rootfs
+LOOP=`kpartx -avs sarahbox_olimex-A20-lime.img | cut -d ' ' -f 3`
+mkfs.ext4 /dev/mapper/$LOOP -L rootfs
 
 mkdir -p /mnt/rootfs
 
-mount /dev/mapper/loop0p1 /mnt/rootfs/
+mount /dev/mapper/$LOOP /mnt/rootfs/
 
-cp -ra armstretchchroot/* /mnt/rootfs
+cp -ra armbullseyechroot/* /mnt/rootfs
 
 export LC_ALL=C
 export LANGUAGE=C
 export LANG=C
-# tunslip6
-if [ -e /vagrant/$1/tunslip6/*.conf ]; then
-  for tunslipconfig in /vagrant/$1/tunslip6/*.conf
-  do
-    cp $tunslipconfig /mnt/rootfs/etc/tunslip6/;
-    chroot /mnt/rootfs systemctl enable tunslip6@`basename $tunslipconfig .conf`.service;
-  done
-fi
 
 rm -f /mnt/rootfs/usr/bin/qemu-arm-static
 
 mkimage -C none -A arm -T script -d /vagrant/$1/boot.cmd /mnt/rootfs/boot/boot.scr
 
 umount /mnt/rootfs/
-zerofree /dev/mapper/loop0p1
+zerofree /dev/mapper/$LOOP
 sync
 kpartx -dvs $IMG_NAME
 

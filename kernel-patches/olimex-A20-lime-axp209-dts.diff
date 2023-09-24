@@ -1,0 +1,84 @@
+Description: axp209 devicetree binding for olimex-A20-lime
+Author: Christian Ratzenhofer <christian.ratzenhofer@cdnm.at>
+Last-Update: 2023-09-24
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/arch/arm/boot/dts/allwinner/sun7i-a20-olinuxino-lime.dts
++++ b/arch/arm/boot/dts/allwinner/sun7i-a20-olinuxino-lime.dts
+@@ -125,13 +125,9 @@
+ 	status = "okay";
+ 
+ 	axp209: pmic@34 {
+-		compatible = "x-powers,axp209";
+ 		reg = <0x34>;
+ 		interrupt-parent = <&nmi_intc>;
+ 		interrupts = <0 IRQ_TYPE_LEVEL_LOW>;
+-
+-		interrupt-controller;
+-		#interrupt-cells = <1>;
+ 	};
+ };
+ 
+@@ -183,6 +179,62 @@
+ 	status = "okay";
+ };
+ 
++#include "axp209.dtsi"
++
++&ac_power_supply {
++	status = "okay";
++};
++
++&battery_power_supply {
++	status = "okay";
++};
++
++&usb_power_supply {
++	status = "okay";
++};
++
++&reg_dcdc2 {
++        regulator-always-on;
++        regulator-min-microvolt = <1000000>;
++        regulator-max-microvolt = <1400000>;
++        regulator-name = "vdd-cpu";
++};
++
++&reg_dcdc3 {
++        regulator-always-on;
++        regulator-min-microvolt = <1000000>;
++        regulator-max-microvolt = <1400000>;
++        regulator-name = "vdd-int-dll";
++};
++
++&reg_ldo1 {
++        regulator-always-on;
++        regulator-min-microvolt = <1300000>;
++        regulator-max-microvolt = <1300000>;
++        regulator-name = "vdd-rtc";
++};
++
++&reg_ldo2 {
++        regulator-always-on;
++        regulator-min-microvolt = <3000000>;
++        regulator-max-microvolt = <3000000>;
++        regulator-name = "avcc";
++};
++
++&reg_ldo3 {
++        regulator-min-microvolt = <2800000>;
++        regulator-max-microvolt = <2800000>;
++        regulator-name = "vddio-csi0";
++        regulator-soft-start;
++        regulator-ramp-delay = <1600>;
++};
++
++&reg_ldo4 {
++        regulator-min-microvolt = <2800000>;
++        regulator-max-microvolt = <2800000>;
++        regulator-name = "vddio-csi1";
++};
++
+ &reg_usb0_vbus {
+ 	status = "okay";
+ };
