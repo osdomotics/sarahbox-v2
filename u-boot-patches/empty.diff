@@ -1,0 +1,8 @@
+quilt push / pop on an empty series file fail
+this empty patch ensures that the build script works at all times
+Index: u-boot-2023.07/.empty
+===================================================================
+--- /dev/null
++++ u-boot-2023.07/.empty
+@@ -0,0 +1 @@
++empty

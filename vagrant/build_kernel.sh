@@ -27,12 +27,12 @@ mkdir -p debian/source
 echo "3.0 (quilt)" > debian/source/format
 export QUILT_PATCHES=debian/patches
 export QUILT_REFRESH_ARGS="-p ab --no-timestamps --no-index"
-quilt push -a
-quilt new kernelconfig.diff
-quilt add .config
+quilt --quiltrc - push -a
+quilt --quiltrc - new kernelconfig.diff
+quilt --quiltrc - add .config
 cp "/vagrant/kernel-config-$LINUXVER" .config
-quilt refresh
-quilt pop -a
+quilt --quiltrc - refresh
+quilt --quiltrc - pop -a
 
 echo building kernel...
 CROSS_COMPILE=arm-linux-gnueabihf- dpkg-buildpackage -aarmhf -rfakeroot -us -uc
