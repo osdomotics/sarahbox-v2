@@ -10,6 +10,11 @@ additional options
 
 Following are the modifications that have been made to the base config
 
+General Setup
+-------------
+
+/proc/config.gz support (IKCONFIG_PROC)
+
 
 Filesystem
 ----------
@@ -23,13 +28,14 @@ Networking
 
 IPv6 (CONFIG_IPV6) required for 6LoWPAN
 nftables (CONFIG_NETFILTER* and CONFIG_NF*)
-6LoWPAN (CONFIG_6LOWPAN*, CONFIG_IEEE802154* and CONFIG_MAC802154
+6LoWPAN (CONFIG_6LOWPAN*, CONFIG_IEEE802154* and CONFIG_MAC802154)
 
 Device Drivers
 --------------
 
-AXP209 power magnagement (PINCTRL_AXP209)
+AXP209 power management (PINCTRL_AXP209,AXP20X_ADC,CHARGER_AXP20X,BATTERY_AXP20X)
 ATUSB (IEEE802154_ATUSB)
+WireGuard (WIREGUARD)
 
 
 removed options
@@ -39,3 +45,14 @@ Boot Support
 ------------
 
 NFS Booting and requirements (Kernel DHCP and similar)
+
+Graphics support
+----------------
+
+Disable everything but Alwinner and LIMA
+
+Device Drivers
+--------------
+
+Disable Chromebook support (CHROME_PLATFORMS)
+

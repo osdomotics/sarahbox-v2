@@ -19,7 +19,20 @@ This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
  	};
  };
  
-@@ -183,6 +179,62 @@
+@@ -171,6 +167,12 @@
+ };
+ 
+ &pio {
++	vcc-pa-supply = <&reg_vcc3v3>;
++	vcc-pc-supply = <&reg_vcc3v3>;
++	vcc-pe-supply = <&reg_ldo3>;
++	vcc-pf-suuply = <&reg_vcc3v3>;
++	vcc-pg-supply = <&reg_ldo4>;
++
+ 	led_pins_olinuxinolime: led-pins {
+ 		pins = "PH2";
+ 		function = "gpio_out";
+@@ -183,6 +185,62 @@
  	status = "okay";
  };
  

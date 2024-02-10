@@ -1,10 +1,9 @@
 #!/bin/sh
 set -e
-
 . /vagrant/vagrant/settings.sh
 
 echo downloading kernel...
-curl -LJOC - "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$LINUXVER.tar.xz"
+curl -LOC - "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-$LINUXVER.tar.xz"
 
 echo unpacking kernel...
 rm -rf "linux-$LINUXVER/" "linux-upstream_$LINUXVER.orig.tar.xz"

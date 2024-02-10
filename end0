@@ -1,0 +1,6 @@
+allow-hotplug end0
+iface end0 inet dhcp
+
+iface end0 inet6 static
+    address abbb::ba27:ebff:fed5:438a
+    netmask 64

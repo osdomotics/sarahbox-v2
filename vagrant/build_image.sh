@@ -1,8 +1,8 @@
 #!/bin/sh
 set -e
-
 . /vagrant/vagrant/settings.sh
 
+CHROOT_DIR="arm${DEBIANVER}chroot"
 IMG_NAME=sarahbox_$1.img
 
 #create flashable roots as root
@@ -19,7 +19,7 @@ mkdir -p /mnt/rootfs
 
 mount /dev/mapper/$LOOP /mnt/rootfs/
 
-cp -ra armbullseyechroot/* /mnt/rootfs
+cp -ra ${CHROOT_DIR}/* /mnt/rootfs
 
 export LC_ALL=C
 export LANGUAGE=C
