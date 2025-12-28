@@ -2,8 +2,11 @@
 set -e
 . /vagrant/vagrant/settings.sh
 
-echo downloading u-boot...
-curl -LOC - "https://ftp.denx.de/pub/u-boot/u-boot-$UBOOTVER.tar.bz2"
+if [ ! -e "u-boot-$UBOOTVER-downloaded" ]; then
+	echo downloading u-boot...
+	curl -LOC - "https://ftp.denx.de/pub/u-boot/u-boot-$UBOOTVER.tar.bz2"
+	touch "u-boot-$UBOOTVER-downloaded"
+fi
 
 echo unpacking u-boot...
 rm -rf "u-boot-$UBOOTVER"
