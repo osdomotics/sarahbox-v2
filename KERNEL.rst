@@ -14,6 +14,8 @@ General Setup
 -------------
 
 /proc/config.gz support (IKCONFIG_PROC)
+Control Group Support (CGROUPS, CGROUP_*)
+Namespaces support (NAMESPACES, CONFIG_*_NS)
 
 
 Filesystem
@@ -44,15 +46,10 @@ removed options
 Boot Support
 ------------
 
-NFS Booting and requirements (Kernel DHCP and similar)
-
-Graphics support
-----------------
-
-Disable everything but Alwinner and LIMA
+NFS Booting and requirements (IP_PNP, NETWORK_FILESYSTEMS)
+initial ramdisk/ramfs (BLK_DEV_RAM)
 
 Device Drivers
 --------------
 
-Disable Chromebook support (CHROME_PLATFORMS)
-
+Various network devices (NET_VENDOR_*) but keeping NET_VENDOR_ALLWINNER and NET_VENDOR_STMICRO

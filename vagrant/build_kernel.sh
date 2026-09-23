@@ -18,7 +18,7 @@ cd "linux-$LINUXVER"
 # scripts/package/mkdebian requires some generated files
 cp "/vagrant/kernel-config-$LINUXVER" .config
 make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- prepare
-MAKE=make ARCH=arm KERNELRELEASE=$LINUXVER KDEB_SOURCENAME=linux-upstream KBUILD_DEBARCH=armhf KDEB_PKGVERSION=$LINUXVER-$LINUXPKGVER scripts/package/mkdebian
+MAKE=make ARCH=arm KERNELRELEASE=$LINUXVER KDEB_SOURCENAME=linux-upstream KBUILD_DEBARCH=armhf KDEB_PKGVERSION=$LINUXVER-$LINUXPKGVER KDEB_CHANGELOG_DIST=$DEBIANVER SRCARCH=arm srctree=. scripts/package/mkdebian
 # cleanup generated files for dpkg-source
 make clean
 rm -r arch/arm/include/generated include/generated include/config
@@ -38,4 +38,4 @@ quilt --quiltrc - refresh
 quilt --quiltrc - pop -a
 
 echo building kernel...
-CROSS_COMPILE=arm-linux-gnueabihf- dpkg-buildpackage -aarmhf -rfakeroot -us -uc
+KBUILD_VERBOSE=0 CROSS_COMPILE=arm-linux-gnueabihf- dpkg-buildpackage -aarmhf -rfakeroot -us -uc

@@ -34,7 +34,7 @@ sed -ie "s/127.0.0.1\\slocalhost/127.0.0.1\\tlocalhost sarahbox/" "${CHROOT_DIR}
 
 #networking
 cp /vagrant/end0 "${CHROOT_DIR}/etc/network/interfaces.d/"
-sed -i s/#net.ipv6.conf.all.forwarding=1/net.ipv6.conf.all.forwarding=1/ "${CHROOT_DIR}/etc/sysctl.conf"
+echo "net.ipv6.conf.all.forwarding=1" > "${CHROOT_DIR}/etc/sysctl.d/IPV6.conf"
 
 #limit installed packages by disabling recommends
 echo "APT::Install-Recommends \"0\";" > "${CHROOT_DIR}/etc/apt/apt.conf.d/99disable-recommends"
@@ -46,15 +46,19 @@ echo "deb https://deb.debian.org/debian $DEBIANVER main" > "${CHROOT_DIR}/etc/ap
 mkdir -p "${CHROOT_DIR}/etc/apt/sources.list.d/"
 
 #security updates
-echo "deb https://deb.debian.org/debian-security ${DEBIANVER}-security main" > "${CHROOT_DIR}/etc/apt/sources.list.d/security.list"
+echo "Types: deb
+URIs: https://deb.debian.org/debian-security/
+Suites: ${DEBIANVER}-security
+Components: main
+Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg" > "${CHROOT_DIR}/etc/apt/sources.list.d/security.sources"
 
 #the osd repo (kernel and coap things)
-cp /vagrant/osd.repository.key "${CHROOT_DIR}/usr/share/keyrings/osd.gpg"
+cp /vagrant/osd.repository.key "${CHROOT_DIR}/etc/apt/keyrings/osd.gpg"
 echo "Types: deb
 URIs: https://sarahbox.osdomotics.com/debian
 Suites: $DEBIANVER
 Components: free
-Signed-By: /usr/share/keyrings/osd.gpg" > "${CHROOT_DIR}/etc/apt/sources.list.d/osd.sources"
+Signed-By: /etc/apt/keyrings/osd.gpg" > "${CHROOT_DIR}/etc/apt/sources.list.d/osd.sources"
 
 #kernel install should link zimage and dts according to the universal uboot script
 mkdir -p "${CHROOT_DIR}/etc/kernel/postinst.d/"
@@ -72,7 +76,7 @@ chmod 755 "${CHROOT_DIR}/sbin/start-stop-daemon"
 #install the packages
 chroot "$CHROOT_DIR" apt-get update
 KERNELPACKAGE=$(grep "Package: linux-image" "${CHROOT_DIR}/var/lib/apt/lists/sarahbox.osdomotics.com_debian_dists_${DEBIANVER}_free_binary-armhf_Packages" | cut -d " " -f 2 | sort -r | head -n 1)
-chroot "$CHROOT_DIR" apt-get install -y openssh-server vim usbutils ntp nftables wpan-tools $KERNELPACKAGE
+chroot "$CHROOT_DIR" apt-get install -y openssh-server vim usbutils systemd-timesyncd nftables wpan-tools rsync gpiod $KERNELPACKAGE
 chroot "$CHROOT_DIR" apt-get upgrade -y
 
 #allow services again
@@ -102,5 +106,5 @@ fi
 echo "export LC_ALL=C.UTF-8" > "${CHROOT_DIR}/etc/profile.d/utf8-LC.sh"
 
 #clean up rootfs a bit
-rm -f "${CHROOT_DIR}/var/cache/apt/archives/*.deb"
-rm -f "${CHROOT_DIR}/var/cache/apt/archives/partial/*"
+chroot "$CHROOT_DIR" apt-get clean
+chroot "$CHROOT_DIR" apt-get distclean
